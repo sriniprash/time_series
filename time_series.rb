@@ -16,7 +16,6 @@ module CaptureTimeSeries
   def after_create_callback
     model = ts_options[:ts_model]
     now = Time.now
-    #Thread.new do
       begin
         model.transaction do
           if has_changes?
@@ -25,19 +24,15 @@ module CaptureTimeSeries
           end
         end
       rescue => e
-        SellerCommon.logger.error "\n\n #{e.message}\n\n"
-        SellerCommon.logger.error  "\n\n #{e.backtrace}\n\n"
+        
       ensure
-        SellerCommon.logger.info  "CaptureTimeSeries after_create_callback took #{Time.now - now} seconds"
-        #ActiveRecord::Base.connection.close
+        
       end
-    #end
   end
 
   def after_update_callback
     model = ts_options[:ts_model]
     now = Time.now
-    #Thread.new do
       begin
         model.transaction do
           if has_changes?
@@ -46,29 +41,22 @@ module CaptureTimeSeries
           end
         end
       rescue => e
-        SellerCommon.logger.error "\n\n #{e.message}\n\n"
-        SellerCommon.logger.error  "\n\n #{e.backtrace}\n\n"
+        
       ensure
-        SellerCommon.logger.info  "CaptureTimeSeries after_update_callback took #{Time.now - now} seconds"
-        #ActiveRecord::Base.connection.close
+        
       end
-    #end
   end
 
   def after_destroy_callback
     model = ts_options[:ts_model]
     now = Time.now
-    #Thread.new do
       begin
         close_last_ts_record(now)
       rescue => e
-        SellerCommon.logger.error "\n\n #{e.message}\n\n"
-        SellerCommon.logger.error  "\n\n #{e.backtrace}\n\n"
+        
       ensure
-        SellerCommon.logger.info  "CaptureTimeSeries into model: #{}after_destroy_callback took #{Time.now - now} seconds"
-        #ActiveRecord::Base.connection.close
+        
       end
-    #end
   end
 
   private
